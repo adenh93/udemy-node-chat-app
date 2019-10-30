@@ -1,0 +1,22 @@
+{
+  "name": "udemy-node-chat-app",
+  "version": "1.0.0",
+  "description": "A repository to document my progress through the Socket.io chat app example via https://www.udemy.com/course/the-complete-nodejs-developer-course-2",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/adenh93/udemy-node-chat-app#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}
