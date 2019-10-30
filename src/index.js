@@ -13,13 +13,11 @@ const io = socketio(server);
 
 app.use(express.static(publicDir));
 
-let count = 0;
-
 io.on("connection", socket => {
   console.log("New Websocket connection");
-  socket.on("increment", () => {
-    count++;
-    io.emit("countUpdated", count);
+  socket.emit("message", "Welcome to the chat app!");
+  socket.on("sendMessage", message => {
+    io.emit("message", message);
   });
 });
 
