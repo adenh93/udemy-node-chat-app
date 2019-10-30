@@ -14,9 +14,11 @@
   "homepage": "https://github.com/adenh93/udemy-node-chat-app#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
+    "@types/socket.io": "^2.1.4",
     "nodemon": "^1.19.4"
   }
 }
