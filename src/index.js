@@ -23,19 +23,26 @@ app.use(express.static(publicDir));
 io.on("connection", socket => {
   console.log("New WebSocket connection");
 
-  socket.emit("message", generateMessage("Welcome to the chat app!"));
-  socket.broadcast.emit("message", generateMessage("A new user has joined!"));
+  socket.on("join", ({ username, room }) => {
+    socket.join(room);
+
+    socket.emit("message", generateMessage(`Welcome to ${room}!`));
+
+    socket.broadcast
+      .to(room)
+      .emit("message", generateMessage(`${username} has joined the room!`));
+  });
 
   socket.on("sendMessage", (message, callback) => {
     if (filter.isProfane(message)) {
       return callback("Profanity is not allowed!");
     }
-    io.emit("message", generateMessage(message));
+    io.to("General").emit("message", generateMessage(message));
     callback();
   });
 
   socket.on("sendLocation", ({ latitude, longitude }, callback) => {
-    io.emit(
+    io.to("General").emit(
       "locationMessage",
       generateLocationMessage(
         `https://google.com/maps?q=${latitude},${longitude}`
