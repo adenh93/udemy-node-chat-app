@@ -17,7 +17,7 @@ const filter = new Filter();
 app.use(express.static(publicDir));
 
 io.on("connection", socket => {
-  console.log("New Websocket connection");
+  console.log("New WebSocket connection");
 
   socket.emit("message", "Welcome to the chat app!");
   socket.broadcast.emit("message", "A new user has joined!");
@@ -31,7 +31,10 @@ io.on("connection", socket => {
   });
 
   socket.on("sendLocation", ({ latitude, longitude }, callback) => {
-    io.emit("message", `https://google.com/maps?q=${latitude},${longitude}`);
+    io.emit(
+      "locationMessage",
+      `https://google.com/maps?q=${latitude},${longitude}`
+    );
     callback();
   });
 
