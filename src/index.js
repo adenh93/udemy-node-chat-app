@@ -50,15 +50,28 @@ io.on("connection", socket => {
   });
 
   socket.on("sendMessage", (message, callback) => {
+    const user = getUser(socket.id);
+
+    if (!user) {
+      return callback("An error occured while sending your message");
+    }
+
     if (filter.isProfane(message)) {
       return callback("Profanity is not allowed!");
     }
-    io.to("General").emit("message", generateMessage(message));
+
+    io.to(user.room).emit("message", generateMessage(message));
     callback();
   });
 
   socket.on("sendLocation", ({ latitude, longitude }, callback) => {
-    io.to("General").emit(
+    const user = getUser(socket.id);
+
+    if (!user) {
+      return callback("An error occured while sending your location");
+    }
+
+    io.to(user.room).emit(
       "locationMessage",
       generateLocationMessage(
         `https://google.com/maps?q=${latitude},${longitude}`
