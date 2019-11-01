@@ -20,16 +20,18 @@ socket.emit("join", { username, room }, error => {
   }
 });
 
-socket.on("message", ({ text, createdAt }) => {
+socket.on("message", ({ username, text, createdAt }) => {
   const html = Mustache.render(messageTemplate, {
+    username,
     message: text,
     createdAt: moment(createdAt).format("h:mm A")
   });
   $messages.insertAdjacentHTML("beforeend", html);
 });
 
-socket.on("locationMessage", ({ url, createdAt }) => {
+socket.on("locationMessage", ({ username, url, createdAt }) => {
   const html = Mustache.render(locationTemplate, {
+    username,
     url,
     createdAt: moment(createdAt).format("h:mm A")
   });
