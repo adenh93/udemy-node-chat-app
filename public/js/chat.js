@@ -13,7 +13,12 @@ const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
 });
 
-socket.emit("join", { username, room });
+socket.emit("join", { username, room }, error => {
+  if (error) {
+    alert(error);
+    location.href = "/";
+  }
+});
 
 socket.on("message", ({ text, createdAt }) => {
   const html = Mustache.render(messageTemplate, {
